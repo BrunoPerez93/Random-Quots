@@ -59,7 +59,7 @@ const Quotes = () => {
           <div className="flex flex-col justify-center items-center w-1/2 bg-c-gray p-5 rounded-[20px] bg-opacity-40 IMAGE" >
             <h2 className="text-c-white mb-5">{quote.author}</h2>
 
-            <div className="">
+            <div className="xs:flex xs:flex-col xs:justify-center xs:items-center sm:flex-row">
               <ButtonQuotes title='Famous Quotes' onClick={handleFamous} />
               <ButtonQuotes title='Inspirational Quotes' onClick={handleInspirational} />
             </div>
