@@ -7,15 +7,17 @@ import regroup from '../../assets/Regroup.svg';
 
 const Quotes = () => {
   const [quote, setQuote] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchQuote();
-    console.log('asd');
   }, [])
 
   const fetchQuote = async () => {
+    setLoading(true);
     const data = await getQuots();
     setQuote(data);
+    setLoading(false);
   };
 
   const handleFamous = async () => {
@@ -54,26 +56,21 @@ const Quotes = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen ">
-      {quote ? (
-        <>
-          <div className="flex flex-col justify-center items-center w-1/2 bg-c-gray p-5 rounded-[20px] bg-opacity-40 IMAGE" >
-            <h2 className="text-c-white mb-5">{quote.author}</h2>
-
-            <div className="xs:flex xs:flex-col xs:justify-center xs:items-center sm:flex-row">
-              <ButtonQuotes title='Famous Quotes' onClick={handleFamous} />
-              <ButtonQuotes title='Inspirational Quotes' onClick={handleInspirational} />
-            </div>
-
-            <h3 className="text-c-light-gray my-5">{quote.content}</h3>
-          </div>
-          <div className="flex my-5 ">
-            <img className="border border-c-gray p-2 rounded-l-[10px] " src={regroup} alt="icono" onClick={fetchQuote}/>
-            <img className="border border-c-gray p-2 rounded-r-[10px]" src={link} alt="icono" onClick={copyToClipboard}/>
-          </div>
-        </>
-
+      {loading ? (
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-c-gray"></div>
       ) : (
-        <p>Loading...</p>
+        <div className="flex flex-col justify-center items-center w-1/2 bg-c-gray p-5 rounded-[20px] bg-opacity-40">
+          <h2 className="text-c-white mb-5">{quote.author}</h2>
+          <div className="xs:flex xs:flex-col xs:justify-center xs:items-center sm:flex-row">
+            <ButtonQuotes title='Famous Quotes' onClick={handleFamous} />
+            <ButtonQuotes title='Inspirational Quotes' onClick={handleInspirational} />
+          </div>
+          <h3 className="text-c-light-gray my-5">{quote.content}</h3>
+          <div className="flex my-5">
+            <img className="border border-c-gray p-2 rounded-l-[10px]" src={regroup} alt="icono" onClick={fetchQuote} />
+            <img className="border border-c-gray p-2 rounded-r-[10px]" src={link} alt="icono" onClick={copyToClipboard} />
+          </div>
+        </div>
       )}
     </div>
   )
